@@ -2,13 +2,12 @@ package com.base;
 
 public class Main {
 
+    public static Game game;
+
     public static void main(String[] args) {
-	    Map world= new Map();
-        world.generationMap();
-        world.getMap();
-        Humans Stas= new Humans();
-        do{
-            Stas.live();
-        }while(Stas.age!=0);
+
+        game = new Game();
+        game.start();
+
     }
 }
