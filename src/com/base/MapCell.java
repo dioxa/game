@@ -1,6 +1,10 @@
 package com.base;
 
 
+import com.base.InGameResources.Food;
+import com.base.InGameResources.Resource;
+import com.base.InGameResources.Wood;
+
 import java.util.HashMap;
 
 public class MapCell {
@@ -13,13 +17,19 @@ public class MapCell {
 
 
     MapCell() {
+        // Init resources on map
         cityResources = new HashMap<String, Resource>();
         freeResources = new HashMap<String, Resource>();
         freeResources.put("Wood", new Wood());
         freeResources.put("Food", new Food());
+        generate();
     }
 
     public void update() {
+
+    }
+
+    private void generate() {
 
     }
 
