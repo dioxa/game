@@ -17,13 +17,19 @@ public class MapCell {
 
 
     MapCell() {
+        // Init resources on map
         cityResources = new HashMap<String, Resource>();
         freeResources = new HashMap<String, Resource>();
         freeResources.put("Wood", new Wood());
         freeResources.put("Food", new Food());
+        generate();
     }
 
     public void update() {
+
+    }
+
+    private void generate() {
 
     }
 

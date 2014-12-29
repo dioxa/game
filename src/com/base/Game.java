@@ -6,23 +6,18 @@ import java.util.TimerTask;
 
 public class Game {
 
-    public final static byte MAP_SIZE  = 10;
+    private Player player;
 
-    public final byte secondsToUpdate = 5;
+    private World world;
 
-    private MapCell map[][] = new MapCell[MAP_SIZE][MAP_SIZE];
-
-    private char mapChar[][] = new char[MAP_SIZE][MAP_SIZE];
+    private final byte secondsToUpdate = 5;
 
     private Timer worldTimer = new Timer();
 
     Game(){
-        for (int i = 0; i < MAP_SIZE; i++) {
-            for (int j = 0; j < MAP_SIZE; j++) {
-                map[i][j]= new MapCell();
-                mapChar[i][j]=('*');
-            }
-        }
+
+        world = new World();
+        player = new Player();
         TimerTask gameLoop = new TimerTask() {
             @Override
             public void run() {
@@ -34,28 +29,10 @@ public class Game {
 
     public void start(){
 
-        updateWorld();
+        player.makeTurn();
+        world.update();
 
     }
 
-    private void updateWorld(){
-
-        for (int i = 0; i < MAP_SIZE; i++) {
-            for (int j = 0; j < MAP_SIZE; j++) {
-                map[i][j].update();
-            }
-        }
-        drawWorld();
-
-    }
-
-    private void drawWorld() {
-        for (int i = 0; i < MAP_SIZE; i++) {
-            System.out.println();
-            for (int j = 0; j < MAP_SIZE; j++) {
-                System.out.print(mapChar[i][j] + " ");
-            }
-        }
-    }
 
 }
