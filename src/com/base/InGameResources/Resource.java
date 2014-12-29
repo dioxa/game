@@ -1,4 +1,4 @@
-package com.base;
+package com.base.InGameResources;
 
 import java.util.Random;
 

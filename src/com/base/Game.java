@@ -1,33 +1,38 @@
 package com.base;
 
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Game {
 
-    public final static byte MAP_SIZE  = 5;
+    private Player player;
 
-    private MapCell map[][] = new MapCell[MAP_SIZE][MAP_SIZE];
+    private World world;
 
-    private char mapChar[][] = new char[MAP_SIZE][MAP_SIZE];
+    private final byte secondsToUpdate = 5;
+
+    private Timer worldTimer = new Timer();
 
     Game(){
-        for (int i = 0; i < MAP_SIZE; i++) {
-            for (int j = 0; j < MAP_SIZE; j++) {
-                map[i][j]= new MapCell();
-                mapChar[i][j]=('_');
+
+        world = new World();
+        player = new Player();
+        TimerTask gameLoop = new TimerTask() {
+            @Override
+            public void run() {
+                start();
             }
-        }
+        };
+        worldTimer.schedule(gameLoop, 0, secondsToUpdate * 1000);
     }
 
     public void start(){
-        System.out.print(map[0][0].getFreeResources("Wood").getName());
+
+        player.makeTurn();
+        world.update();
+
     }
 
-    public void updateWorld(){
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                map[i][j].update();
-            }
-        }
-    }
 
 }
