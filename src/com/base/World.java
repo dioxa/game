@@ -1,7 +1,10 @@
 package com.base;
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 public class World {
 
     public final byte MAP_SIZE  = 10;
@@ -41,10 +44,15 @@ public class World {
         }
     }
 
+<<<<<<< HEAD
     private void clearConsole(){
         for (int i=0; i<9; i++){
             System.out.println(' ');
         }
+=======
+    private void clearConsole() {
+
+>>>>>>> origin/master
     }
 
 }
