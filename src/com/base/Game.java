@@ -17,7 +17,7 @@ public class Game {
     Game(){
 
         world = new World();
-        player = new Player();
+        player = new Player(world);
         TimerTask gameLoop = new TimerTask() {
             @Override
             public void run() {

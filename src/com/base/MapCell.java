@@ -15,6 +15,8 @@ public class MapCell {
 
     private int population;
 
+    private byte id;
+
 
     MapCell() {
         // Init resources on map
@@ -32,6 +34,8 @@ public class MapCell {
     private void generate() {
 
     }
+
+    public void setId(byte id){ this.id = id; }
 
     public Resource getFreeResources(String resourceName) {
         return freeResources.get(resourceName);
