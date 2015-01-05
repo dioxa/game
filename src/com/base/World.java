@@ -1,6 +1,7 @@
 package com.base;
 
 
+
 public class World {
 
     public final byte MAP_SIZE  = 10;
@@ -29,6 +30,11 @@ public class World {
         display();
     }
 
+    public void setCellPlayer(int i, int j, byte id){
+        map[i][j].setId(id);
+        mapChar[i][j] = (char) id;
+    }
+
     private void display() {
         //Display map to screen
         clearConsole();
@@ -40,8 +46,10 @@ public class World {
         }
     }
 
-    private void clearConsole() {
-
+    private void clearConsole(){
+        for (int i = 0; i < 9; i++){
+            System.out.println(' ');
+        }
     }
 
 }
