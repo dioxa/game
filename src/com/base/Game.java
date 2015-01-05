@@ -29,8 +29,8 @@ public class Game {
 
     public void start(){
 
-        player.makeTurn();
         world.update();
+        player.makeTurn();
 
     }
 

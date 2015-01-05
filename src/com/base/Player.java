@@ -19,9 +19,9 @@ public class Player {
 
     public void makeTurn() {
         Scanner sc = new Scanner(System.in);
-        int i = sc.nextInt() - 1;
-        int j = sc.nextInt() - 1;
-        world.setCellPlayer(i, j, id);
+        int x = sc.nextInt() - 1;
+        int y = sc.nextInt() - 1;
+        world.setCellOwner(x, y, id);
     }
 
     public byte getId() {
