@@ -15,7 +15,7 @@ public class MapCell {
 
     private int population;
 
-    private byte id;
+    private byte ownerID = 0;
 
 
     MapCell() {
@@ -35,7 +35,9 @@ public class MapCell {
 
     }
 
-    public void setId(byte id){ this.id = id; }
+    public void setOwner(byte id) {
+        ownerID = id;
+    }
 
     public Resource getFreeResources(String resourceName) {
         return freeResources.get(resourceName);
