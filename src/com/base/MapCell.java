@@ -38,8 +38,11 @@ public class MapCell {
     public void setOwner(byte id) {
         ownerID = id;
     }
+<<<<<<< HEAD
 
     public byte getOwner(){ return ownerID; }
+=======
+>>>>>>> origin/master
 
     public Resource getFreeResources(String resourceName) {
         return freeResources.get(resourceName);

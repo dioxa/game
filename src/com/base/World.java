@@ -47,12 +47,15 @@ public class World {
         System.out.println();
     }
 
+<<<<<<< HEAD
     public boolean checkTurn(int x, int y, byte id) {
         return (map[x-1][y-1].getOwner() == id || map[x][y-1].getOwner() == id || map[x+1][y-1].getOwner() == id ||
                 map[x-1][y].getOwner() == id || map[x+1][y].getOwner() == id ||map[x-1][y+1].getOwner() == id ||
                 map[x][y+1].getOwner() == id || map[x+1][y+1].getOwner() == id);
         }
 
+=======
+>>>>>>> origin/master
     private void clearConsole() {
         for (int i = 0; i < 9; i++){
             System.out.println(' ');
