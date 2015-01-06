@@ -2,6 +2,7 @@ package com.base;
 
 import java.util.Scanner;
 
+
 public class Player {
 
     private byte id;
@@ -19,9 +20,13 @@ public class Player {
 
     public void makeTurn() {
         Scanner sc = new Scanner(System.in);
-        int i = sc.nextInt() - 1;
-        int j = sc.nextInt() - 1;
-        world.setCellPlayer(i, j, id);
+        int x, y;
+        do {
+            x = sc.nextInt() - 1;
+            y = sc.nextInt() - 1;
+
+        }while ( world.checkTurn(x, y, id) );
+        world.setCellOwner(x, y, id);
     }
 
     public byte getId() {

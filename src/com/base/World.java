@@ -30,9 +30,9 @@ public class World {
         display();
     }
 
-    public void setCellPlayer(int i, int j, byte id){
-        map[i][j].setId(id);
-        mapChar[i][j] = (char) id;
+    public void setCellOwner(int x, int y, byte id) {
+        map[y][x].setOwner(id);
+        mapChar[y][x] = '1';
     }
 
     private void display() {
@@ -44,9 +44,16 @@ public class World {
                 System.out.print(mapChar[i][j] + " ");
             }
         }
+        System.out.println();
     }
 
-    private void clearConsole(){
+    public boolean checkTurn(int x, int y, byte id) {
+        return (map[x-1][y-1].getOwner() == id || map[x][y-1].getOwner() == id || map[x+1][y-1].getOwner() == id ||
+                map[x-1][y].getOwner() == id || map[x+1][y].getOwner() == id ||map[x-1][y+1].getOwner() == id ||
+                map[x][y+1].getOwner() == id || map[x+1][y+1].getOwner() == id);
+        }
+
+    private void clearConsole() {
         for (int i = 0; i < 9; i++){
             System.out.println(' ');
         }
