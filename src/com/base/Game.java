@@ -1,9 +1,5 @@
 package com.base;
 
-
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class Game {
 
     private Player player;
@@ -12,27 +8,32 @@ public class Game {
 
     private final byte secondsToUpdate = 5;
 
-    private Timer worldTimer = new Timer();
+    private boolean gameOver = false;
 
     Game(){
 
         world = new World();
         player = new Player(world);
-        TimerTask gameLoop = new TimerTask() {
-            @Override
-            public void run() {
-                start();
-            }
-        };
-        worldTimer.schedule(gameLoop, 0, secondsToUpdate * 1000);
+        world.setCellOwner(0, 0, player.getId());
     }
 
     public void start(){
 
-        world.update();
-        player.makeTurn();
+        do {
 
+            waitSeconds(secondsToUpdate);
+            world.update();
+            player.makeTurn();
+
+        } while(!gameOver);
     }
 
+    public void waitSeconds(int seconds) {
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException error) {
+            Thread.currentThread().interrupt();
+        }
+    }
 
 }
