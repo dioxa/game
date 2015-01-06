@@ -8,8 +8,6 @@ public abstract class Resource {
 
     protected String name;
 
-    protected final Random random = new Random(10);
-
     Resource() {
         this.name = getClass().getSimpleName();
     }

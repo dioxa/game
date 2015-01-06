@@ -6,6 +6,7 @@ import com.base.InGameResources.Resource;
 import com.base.InGameResources.Wood;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class MapCell {
 
@@ -16,6 +17,8 @@ public class MapCell {
     private int population;
 
     private byte ownerID = 0;
+
+    Random rand = new Random(40);
 
 
     MapCell() {
@@ -32,17 +35,16 @@ public class MapCell {
     }
 
     private void generate() {
-
+        //rand.nextInt(60)
     }
 
     public void setOwner(byte id) {
         ownerID = id;
     }
-<<<<<<< HEAD
 
-    public byte getOwner(){ return ownerID; }
-=======
->>>>>>> origin/master
+    public byte getOwner(){
+        return ownerID;
+    }
 
     public Resource getFreeResources(String resourceName) {
         return freeResources.get(resourceName);

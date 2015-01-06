@@ -31,8 +31,24 @@ public class World {
     }
 
     public void setCellOwner(int x, int y, byte id) {
+        //Set cell owner
         map[y][x].setOwner(id);
         mapChar[y][x] = '1';
+    }
+
+    public boolean setCellOwnerByTurn(int x, int y, byte id) {
+        if (!checkTurnAvailability(x, y, id)) {
+            System.out.println("You have no right to do this turn. Try again");
+            return true;
+        }
+
+        try {
+            setCellOwner(x, y, id);
+            return false;
+        } catch (ArrayIndexOutOfBoundsException error) {
+            System.out.println("Incorrect coordinates. Try again.");
+            return true;
+        }
     }
 
     private void display() {
@@ -47,15 +63,21 @@ public class World {
         System.out.println();
     }
 
-<<<<<<< HEAD
-    public boolean checkTurn(int x, int y, byte id) {
-        return (map[x-1][y-1].getOwner() == id || map[x][y-1].getOwner() == id || map[x+1][y-1].getOwner() == id ||
-                map[x-1][y].getOwner() == id || map[x+1][y].getOwner() == id ||map[x-1][y+1].getOwner() == id ||
-                map[x][y+1].getOwner() == id || map[x+1][y+1].getOwner() == id);
+    public boolean checkTurnAvailability(int x, int y, byte id) {
+        if (map[y][x].getOwner() == id)
+            return false;
+        for(int row = y-1; row <= y+1; row++) {
+            for(int col = x-1; col <= x+1; col++) {
+                try {
+                    if (map[row][col].getOwner() == id)
+                        return true;
+                } catch (ArrayIndexOutOfBoundsException error) {
+                }
+            }
         }
+        return false;
+    }
 
-=======
->>>>>>> origin/master
     private void clearConsole() {
         for (int i = 0; i < 9; i++){
             System.out.println(' ');
