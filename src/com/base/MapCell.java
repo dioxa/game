@@ -16,15 +16,17 @@ public class MapCell {
 
     private int population;
 
-    private byte ownerID = 0;
+    private int ownerID = 0;
 
-    MapCell() {
-        // Init resources on map
+    // Init resources on map
+    public MapCell() {
+
         cityResources = new HashMap<String, Resource>();
         freeResources = new HashMap<String, Resource>();
         freeResources.put("Wood", new Wood());
         freeResources.put("Food", new Food());
         generate();
+
     }
 
     public void update() {
@@ -32,21 +34,27 @@ public class MapCell {
     }
 
     private void generate() {
-        Random rand = new Random(40);
-        freeResources.get("Wood").setAmount(rand.nextInt(60));
-        freeResources.get("Food").setAmount(rand.nextInt(60));
+
+        Random rand = new Random();
+        freeResources.get("Wood").setAmount(rand.nextInt(20) + 40);
+        freeResources.get("Food").setAmount(rand.nextInt(20) + 40);
+
     }
 
-    public void setOwner(byte id) {
+    public void setOwner(int id) {
         ownerID = id;
     }
 
-    public byte getOwner(){
+    public int getOwner(){
         return ownerID;
     }
 
     public Resource getFreeResources(String resourceName) {
         return freeResources.get(resourceName);
+    }
+
+    public Resource getCityResources(String resourceName) {
+        return cityResources.get(resourceName);
     }
 
     public void setPopulation(int population) {

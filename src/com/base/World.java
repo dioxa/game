@@ -11,17 +11,20 @@ public class World {
     private char mapChar[][] = new char[MAP_SIZE][MAP_SIZE];
 
 
-    World() {
+    public World() {
+
         for (int i = 0; i < MAP_SIZE; i++) {
             for (int j = 0; j < MAP_SIZE; j++) {
                 map[i][j] = new MapCell();
                 mapChar[i][j] = ('*');
             }
         }
+
     }
 
+    //Update every MapCell and display
     public void update() {
-        //Update every MapCell and display
+
         for (int i = 0; i < MAP_SIZE; i++) {
             for (int j = 0; j < MAP_SIZE; j++) {
                 map[i][j].update();
@@ -30,29 +33,34 @@ public class World {
         display();
     }
 
-    public void setCellOwner(int x, int y, byte id) {
-        //Set cell owner
+    //Set cell owner
+    public void setCellOwner(int x, int y, int id) {
+
         map[y][x].setOwner(id);
-        mapChar[y][x] = '1';
+        mapChar[y][x] = String.valueOf(id).charAt(0);
+
     }
 
-    public boolean setCellOwnerByTurn(int x, int y, byte id) {
+    public boolean setCellOwnerByTurn(int x, int y, int id) {
+
         if (!checkTurnAvailability(x, y, id)) {
             System.out.println("You have no right to do this turn. Try again");
-            return true;
+            return false;
         }
 
         try {
             setCellOwner(x, y, id);
-            return false;
+            return true;
         } catch (ArrayIndexOutOfBoundsException error) {
             System.out.println("Incorrect coordinates. Try again.");
-            return true;
+            return false;
         }
+
     }
 
+    //Display map to screen
     private void display() {
-        //Display map to screen
+
         clearConsole();
         for (int i = 0; i < MAP_SIZE; i++) {
             System.out.println();
@@ -61,27 +69,30 @@ public class World {
             }
         }
         System.out.println();
+
     }
 
-    public boolean checkTurnAvailability(int x, int y, byte id) {
-        if (map[y][x].getOwner() == id)
-            return false;
-        for(int row = y-1; row <= y+1; row++) {
-            for(int col = x-1; col <= x+1; col++) {
+    public boolean checkTurnAvailability(int x, int y, int id) {
+
+        for (int row = y-1; row <= y+1; row++) {
+            for (int col = x-1; col <= x+1; col++) {
                 try {
-                    if (map[row][col].getOwner() == id)
+                    if (map[row][col].getOwner() == id && map[y][x].getOwner() != id)
                         return true;
                 } catch (ArrayIndexOutOfBoundsException error) {
                 }
             }
         }
         return false;
+
     }
 
     private void clearConsole() {
+
         for (int i = 0; i < 9; i++){
             System.out.println(' ');
         }
+
     }
 
 }

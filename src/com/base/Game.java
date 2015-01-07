@@ -10,7 +10,7 @@ public class Game {
 
     private boolean gameOver = false;
 
-    Game(){
+    public Game(){
 
         world = new World();
         player = new Player(world);
@@ -29,11 +29,13 @@ public class Game {
     }
 
     public void waitSeconds(int seconds) {
+
         try {
             Thread.sleep(seconds * 1000);
         } catch (InterruptedException error) {
             Thread.currentThread().interrupt();
         }
+
     }
 
 }
