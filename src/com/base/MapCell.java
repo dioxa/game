@@ -35,7 +35,8 @@ public class MapCell {
     }
 
     private void generate() {
-        //rand.nextInt(60)
+        freeResources.get("Wood").setAmount(rand.nextInt(60));
+        freeResources.get("Food").setAmount(rand.nextInt(60));
     }
 
     public void setOwner(byte id) {
