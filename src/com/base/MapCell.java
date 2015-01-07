@@ -18,9 +18,6 @@ public class MapCell {
 
     private byte ownerID = 0;
 
-    Random rand = new Random(40);
-
-
     MapCell() {
         // Init resources on map
         cityResources = new HashMap<String, Resource>();
@@ -35,6 +32,7 @@ public class MapCell {
     }
 
     private void generate() {
+        Random rand = new Random(40);
         freeResources.get("Wood").setAmount(rand.nextInt(60));
         freeResources.get("Food").setAmount(rand.nextInt(60));
     }
