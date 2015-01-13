@@ -24,8 +24,8 @@ public class Game {
         do {
             waitSeconds(secondsToUpdate);
             world.update();
-            System.out.println("Хотите ли вы сделать ход?");
-            if (sc.nextLine() == "y") player.makeTurn();
+            System.out.println("Хотите ли вы сделать ход? y/n");
+            if (sc.nextLine().toLowerCase().equals("y")) player.makeTurn();
         } while(!gameOver);
     }
 
