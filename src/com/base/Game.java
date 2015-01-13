@@ -1,5 +1,7 @@
 package com.base;
 
+import java.util.Scanner;
+
 public class Game {
 
     private Player player;
@@ -18,13 +20,12 @@ public class Game {
     }
 
     public void start(){
-
+        Scanner sc = new Scanner(System.in);
         do {
-
             waitSeconds(secondsToUpdate);
             world.update();
-            player.makeTurn();
-
+            System.out.println("Хотите ли вы сделать ход?");
+            if (sc.nextLine() == "y") player.makeTurn();
         } while(!gameOver);
     }
 

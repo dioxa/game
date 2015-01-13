@@ -30,7 +30,7 @@ public class MapCell {
     }
 
     public void update() {
-
+        if (ownerID != 0) population += 1;
     }
 
     private void generate() {
@@ -43,10 +43,15 @@ public class MapCell {
 
     public void setOwner(int id) {
         ownerID = id;
+        population = 1;
     }
 
     public int getOwner(){
         return ownerID;
+    }
+
+    public int getPopulation() {
+        return population;
     }
 
     public Resource getFreeResources(String resourceName) {
