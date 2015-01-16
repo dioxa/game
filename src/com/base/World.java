@@ -72,6 +72,23 @@ public class World {
 
     }
 
+    public void setPopulation(int x, int y, int exX, int exY, int population){
+            map[y][x].shippingPopulation(population);
+            map[exY][exX].shippingPopulation(-population);
+    }
+
+    public boolean checkSetingAvailability(int x, int y, int id, int exY, int exX, int population) {
+                try {
+                    if (map[y][x].getOwner() == id && map[exY][exX].getOwner() == id && map[exY][exX].getPopulation() > population + 1){
+                        setPopulation(x, y, exX, exY, population);
+                        return true;
+                    } else return false;
+                } catch (ArrayIndexOutOfBoundsException error) {
+                    System.out.println("huinu smorozil");
+                }
+        return false;
+    }
+
     public boolean checkTurnAvailability(int x, int y, int id) {
 
         for (int row = y-1; row <= y+1; row++) {
@@ -84,15 +101,12 @@ public class World {
             }
         }
         return false;
-
     }
 
     private void clearConsole() {
-
         for (int i = 0; i < 9; i++){
             System.out.println(' ');
         }
-
     }
 
 }

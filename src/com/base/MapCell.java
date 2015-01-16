@@ -30,7 +30,7 @@ public class MapCell {
     }
 
     public void update() {
-        if (ownerID != 0) population += 1;
+        if (ownerID != 0 && population > 1) population += 1;
     }
 
     private void generate() {
@@ -44,6 +44,10 @@ public class MapCell {
     public void setOwner(int id) {
         ownerID = id;
         population = 1;
+    }
+
+    public void shippingPopulation(int populationToShipping){
+        population += populationToShipping;
     }
 
     public int getOwner(){
