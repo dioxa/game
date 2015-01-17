@@ -1,8 +1,6 @@
 package com.base;
 
 
-import static java.lang.Math.cbrt;
-
 public class World {
 
     public final byte MAP_SIZE  = 10;
@@ -11,6 +9,7 @@ public class World {
 
     private char mapChar[][] = new char[MAP_SIZE][MAP_SIZE];
 
+    private int turnCounter = 0;
 
     public World() {
 
@@ -24,17 +23,12 @@ public class World {
     }
 
     //Update every MapCell and display
-    public void update(int turn) {
-    double amount;
+    public void update() {
+        turnCounter++;
         for (int i = 0; i < MAP_SIZE; i++) {
             for (int j = 0; j < MAP_SIZE; j++) {
-                map[i][j].update();
-                if (turn % 3 == 0 && map[i][j].getOwner()!=0){
-                    amount = cbrt(map[i][j].getPopulation());
-                    map[i][j].setCityResources("Wood", map[i][j].getCityResources("Wood") + amount);
-                    map[i][j].setCityResources("Food", map[i][j].getCityResources("Wood") + amount);
-                    map[i][j].setFreeResources("Wood", (map[i][j].getFreeResources("Wood") - amount));
-                    map[i][j].setFreeResources("Food", (map[i][j].getFreeResources("Food") - amount));
+                if (map[i][j].getOwner() != 0) {
+                    map[i][j].update(turnCounter);
                 }
             }
         }
@@ -76,7 +70,7 @@ public class World {
                 System.out.print(mapChar[i][j] + " ");
             }
         }
-        System.out.println();
+        System.out.println("\nХод: " + turnCounter);
 
     }
 

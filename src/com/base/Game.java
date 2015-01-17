@@ -8,11 +8,9 @@ public class Game {
 
     private World world;
 
-    private final byte secondsToUpdate = 5;
+    private final byte secondsToUpdate = 2;
 
     private boolean gameOver = false;
-
-    public int turnCounter = 0;
 
     public Game(){
         world = new World();
@@ -24,9 +22,8 @@ public class Game {
         Scanner sc = new Scanner(System.in);
         do {
             waitSeconds(secondsToUpdate);
-            world.update(turnCounter);
-            turnCounter ++;
-            System.out.println("Ход: " + turnCounter);
+            world.update();
+
             System.out.println("Хотите ли вы сделать ход? y/n");
             if (sc.nextLine().toLowerCase().equals("y")) {
                 player.makeTurn();

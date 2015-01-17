@@ -8,6 +8,8 @@ import com.base.InGameResources.Wood;
 import java.util.HashMap;
 import java.util.Random;
 
+import static java.lang.Math.cbrt;
+
 public class MapCell {
 
     private HashMap<String, Resource> freeResources;
@@ -30,11 +32,15 @@ public class MapCell {
         generate();
     }
 
-    public void update() {
-        if (ownerID != 0 && population > 0) {
-            population += 1;
+    public void update(int turn) {
+        population += 1;
+        if (turn % 3 == 0) {
+            double amount = cbrt(population);
+            for (String resource : freeResources.keySet()) {
+                setCityResources(resource, getCityResources(resource) + amount);
+                setFreeResources(resource, getFreeResources(resource) - amount);
+            }
         }
-
     }
 
     private void generate() {
@@ -67,11 +73,11 @@ public class MapCell {
         return population;
     }
 
-    public Double getFreeResources(String resourceName) {
+    public double getFreeResources(String resourceName) {
         return freeResources.get(resourceName).getAmount();
     }
 
-    public Double getCityResources(String resourceName) {
+    public double getCityResources(String resourceName) {
         return cityResources.get(resourceName).getAmount();
     }
 
