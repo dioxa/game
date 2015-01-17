@@ -44,7 +44,7 @@ public class World {
     public boolean setCellOwnerByTurn(int x, int y, int id) {
 
         if (!checkTurnAvailability(x, y, id)) {
-            System.out.println("You have no right to do this turn. Try again");
+            System.out.println("Вы не можете сделать этот ход. Попробуйте еще раз.");
             return false;
         }
 
@@ -52,7 +52,7 @@ public class World {
             setCellOwner(x, y, id);
             return true;
         } catch (ArrayIndexOutOfBoundsException error) {
-            System.out.println("Incorrect coordinates. Try again.");
+            System.out.println("Неверные координаты. Попробуйте еще раз.");
             return false;
         }
 
@@ -72,25 +72,31 @@ public class World {
 
     }
 
-    public void setPopulation(int x, int y, int exX, int exY, int population){
-            map[y][x].shippingPopulation(population);
-            map[exY][exX].shippingPopulation(-population);
+    public void movePopulation(int prevX, int prevY, int x, int y, int population){
+            map[y][x].setPopulation(map[y][x].getPopulation() + population);
+            map[prevY][prevX].setPopulation(map[prevY][prevX].getPopulation() - population);
     }
 
-    public boolean checkSetingAvailability(int x, int y, int id, int exY, int exX, int population) {
+    public boolean checkMovePopulationAvailability(int prevX, int prevY, int x, int y, int playerId, int population) {
                 try {
-                    if (map[y][x].getOwner() == id && map[exY][exX].getOwner() == id && map[exY][exX].getPopulation() > population + 1){
-                        setPopulation(x, y, exX, exY, population);
-                        return true;
-                    } else return false;
+                    if (map[prevY][prevX].getOwner() == playerId && map[y][x].getOwner() == playerId) {
+                        if (map[prevY][prevX].getPopulation() > population) {
+                            movePopulation(prevX, prevY, x, y, population);
+                            return true;
+                        } else {
+                            System.out.println("На клетке не может остаться меньше одного человека.");
+                        }
+                    } else {
+                        System.out.println("Обе клетки должны принадлежать вам.");
+                    }
                 } catch (ArrayIndexOutOfBoundsException error) {
-                    System.out.println("huinu smorozil");
+                    System.out.println("Ход за границы карты.");
                 }
         return false;
+
     }
 
     public boolean checkTurnAvailability(int x, int y, int id) {
-
         for (int row = y-1; row <= y+1; row++) {
             for (int col = x-1; col <= x+1; col++) {
                 try {
