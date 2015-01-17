@@ -25,22 +25,33 @@ public class MapCell {
         freeResources = new HashMap<String, Resource>();
         freeResources.put("Wood", new Wood());
         freeResources.put("Food", new Food());
+        cityResources.put("Wood", new Wood());
+        cityResources.put("Food", new Food());
         generate();
-
     }
 
     public void update() {
         if (ownerID != 0 && population > 0) {
             population += 1;
         }
+
     }
 
     private void generate() {
-
         Random rand = new Random();
         freeResources.get("Wood").setAmount(rand.nextInt(20) + 40);
         freeResources.get("Food").setAmount(rand.nextInt(20) + 40);
+        cityResources.get("Wood").setAmount(0);
+        cityResources.get("Food").setAmount(0);
 
+    }
+
+    public void setCityResources(String resourceName, double amount){
+        cityResources.get(resourceName).setAmount(amount);
+    }
+
+    public void setFreeResources(String resourceName, double amount){
+        freeResources.get(resourceName).setAmount(amount);
     }
 
     public void setOwner(int id) {
@@ -56,12 +67,12 @@ public class MapCell {
         return population;
     }
 
-    public Resource getFreeResources(String resourceName) {
-        return freeResources.get(resourceName);
+    public Double getFreeResources(String resourceName) {
+        return freeResources.get(resourceName).getAmount();
     }
 
-    public Resource getCityResources(String resourceName) {
-        return cityResources.get(resourceName);
+    public Double getCityResources(String resourceName) {
+        return cityResources.get(resourceName).getAmount();
     }
 
     public void setPopulation(int population) {

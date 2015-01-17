@@ -1,10 +1,8 @@
 package com.base.InGameResources;
 
-import java.util.Random;
-
 public abstract class Resource {
 
-    protected int amount;
+    protected double amount;
 
     protected String name;
 
@@ -12,11 +10,11 @@ public abstract class Resource {
         this.name = getClass().getSimpleName();
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount){
+    public void setAmount(double amount){
         this.amount = amount;
     }
 

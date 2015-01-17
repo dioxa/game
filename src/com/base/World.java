@@ -1,6 +1,7 @@
 package com.base;
 
 
+import static java.lang.Math.cbrt;
 
 public class World {
 
@@ -23,11 +24,18 @@ public class World {
     }
 
     //Update every MapCell and display
-    public void update() {
-
+    public void update(int turn) {
+    double amount;
         for (int i = 0; i < MAP_SIZE; i++) {
             for (int j = 0; j < MAP_SIZE; j++) {
                 map[i][j].update();
+                if (turn % 3 == 0 && map[i][j].getOwner()!=0){
+                    amount = cbrt(map[i][j].getPopulation());
+                    map[i][j].setCityResources("Wood", map[i][j].getCityResources("Wood") + amount);
+                    map[i][j].setCityResources("Food", map[i][j].getCityResources("Wood") + amount);
+                    map[i][j].setFreeResources("Wood", (map[i][j].getFreeResources("Wood") - amount));
+                    map[i][j].setFreeResources("Food", (map[i][j].getFreeResources("Food") - amount));
+                }
             }
         }
         display();
