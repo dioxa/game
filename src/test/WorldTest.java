@@ -47,4 +47,10 @@ public class WorldTest {
 
     }
 
+    @Test
+    public void testCheckMovePopulationAvailability() {
+        world.setCellOwner(2, 1, 1);
+        world.update();
+    }
+
 }

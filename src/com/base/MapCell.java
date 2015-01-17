@@ -45,11 +45,10 @@ public class MapCell {
 
     private void generate() {
         Random rand = new Random();
-        freeResources.get("Wood").setAmount(rand.nextInt(20) + 40);
-        freeResources.get("Food").setAmount(rand.nextInt(20) + 40);
-        cityResources.get("Wood").setAmount(0);
-        cityResources.get("Food").setAmount(0);
-
+        for (String resource : freeResources.keySet()) {
+            freeResources.get(resource).setAmount(rand.nextInt(20) + 40);
+            cityResources.get(resource).setAmount(0);
+        }
     }
 
     public void setCityResources(String resourceName, double amount){
