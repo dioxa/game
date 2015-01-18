@@ -48,9 +48,27 @@ public class WorldTest {
     }
 
     @Test
-    public void testCheckMovePopulationAvailability() {
-        world.setCellOwner(2, 1, 1);
+    public void testCheckMovePopulationAvailabilityGeneral() {
+        world.setCellOwner(0, 0, 1);
         world.update();
+        Assert.assertEquals(2, world.getMapCell(0, 0).getPopulation());
+        for (int i = 0; i < 10; i++) {
+            world.update();
+        }
+        Assert.assertEquals(12, world.getMapCell(1, 1).getPopulation());
+        Assert.assertEquals(12, world.getMapCell(0, 0).getPopulation());
+        Assert.assertFalse(world.checkMovePopulationAvailability(1, 1, 0, 0, 1, 12));
+        Assert.assertTrue(world.checkMovePopulationAvailability(1, 1, 0, 0, 1, 11));
+    }
+
+    @Test
+    public void testCheckMovePopulationAvailabilityOtherPlayerCell() {
+        world.setCellOwner(0, 0, 2);
+        world.update();
+        Assert.assertEquals(2, world.getMapCell(0, 0).getPopulation());
+        Assert.assertEquals(2, world.getMapCell(1, 1).getPopulation());
+        Assert.assertFalse(world.checkMovePopulationAvailability(0, 0, 1, 1, 2, 1));
+
     }
 
 }

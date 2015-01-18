@@ -3,7 +3,7 @@ package com.base;
 
 public class World {
 
-    public final byte MAP_SIZE  = 10;
+   private final byte MAP_SIZE  = 10;
 
     private MapCell map[][] = new MapCell[MAP_SIZE][MAP_SIZE];
 
@@ -104,7 +104,7 @@ public class World {
                 try {
                     if (map[row][col].getOwner() == id && map[y][x].getOwner() != id)
                         return true;
-                } catch (ArrayIndexOutOfBoundsException error) {
+                } catch (ArrayIndexOutOfBoundsException ignored) {
                 }
             }
         }
@@ -115,6 +115,10 @@ public class World {
         for (int i = 0; i < 9; i++){
             System.out.println(' ');
         }
+    }
+
+    public MapCell getMapCell(int x, int y) {
+        return map[y][x];
     }
 
 }

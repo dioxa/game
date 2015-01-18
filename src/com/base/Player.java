@@ -5,13 +5,13 @@ import java.util.Scanner;
 
 public class Player {
 
-    private int id;
+    private final int id;
 
-    private World world;
+    private final World world;
 
     private static int nextId = 1;
 
-    private Scanner keyboard = new Scanner(System.in);
+    private final Scanner keyboard = new Scanner(System.in);
 
     private boolean turnIsOver;
 

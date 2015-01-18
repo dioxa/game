@@ -23,8 +23,8 @@ public class MapCell {
     // Init resources on map
     public MapCell() {
 
-        cityResources = new HashMap<String, Resource>();
-        freeResources = new HashMap<String, Resource>();
+        cityResources = new HashMap<>();
+        freeResources = new HashMap<>();
         freeResources.put("Wood", new Wood());
         freeResources.put("Food", new Food());
         cityResources.put("Wood", new Wood());

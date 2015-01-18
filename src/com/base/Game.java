@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class Game {
 
-    private Player player;
+    private final Player player;
 
-    private World world;
+    private final World world;
 
     private final byte secondsToUpdate = 2;
 

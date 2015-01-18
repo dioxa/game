@@ -18,6 +18,7 @@ public abstract class Resource {
         this.amount = amount;
     }
 
+    @SuppressWarnings("unused")
     public String getName() {
         return name;
     }
