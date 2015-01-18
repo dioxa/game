@@ -15,7 +15,11 @@ public abstract class Resource {
     }
 
     public void setAmount(double amount){
-        this.amount = amount;
+        if (  amount < 0){
+            this.amount = 0;
+        } else {
+            this.amount = amount;
+        }
     }
 
     @SuppressWarnings("unused")
