@@ -98,6 +98,30 @@ public class World {
 
     }
 
+    public void moveResources(int prevX, int prevY, int x, int y, String resourceName, int resources){
+        map[y][x].setCityResources(resourceName, map[y][x].getCityResources(resourceName) + resources);
+        map[prevY][prevX].setCityResources(resourceName, map[prevY][prevX].getCityResources(resourceName) - resources);
+    }
+
+    public boolean checkMoveResourcesAvailability(int prevX, int prevY, int x, int y, int playerId, String resourceName, int resources) {
+        try {
+            if (map[prevY][prevX].getOwner() == playerId && map[y][x].getOwner() == playerId) {
+                if (map[prevY][prevX].getCityResources(resourceName) > resources) {
+                    moveResources(prevX, prevY, x, y, resourceName, resources);
+                    return true;
+                } else {
+                    System.out.println("В клетке не хватает ресурсов.");
+                }
+            } else {
+                System.out.println("Обе клетки должны принадлежать вам.");
+            }
+        } catch (ArrayIndexOutOfBoundsException error) {
+            System.out.println("Ход за границы карты.");
+        }
+        return false;
+
+    }
+
     public boolean checkTurnAvailability(int x, int y, int id) {
         for (int row = y-1; row <= y+1; row++) {
             for (int col = x-1; col <= x+1; col++) {

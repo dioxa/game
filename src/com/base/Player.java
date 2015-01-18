@@ -31,6 +31,7 @@ public class Player {
             System.out.println("Введите номер ействия: ");
             System.out.println("1. Занять клетку.");
             System.out.println("2. Переместить население.");
+            System.out.println("3. Переместить ресурсы.");
 
             actionNumber = keyboard.nextInt();
             switch (actionNumber) {
@@ -39,6 +40,9 @@ public class Player {
                     break;
                 case 2:
                     makeMovePopulationTurn();
+                    break;
+                case 3:
+                    makeMoveResourcesTurn();
                     break;
                 default:
                     System.out.println("Такого действия нет. Попробуйте еще раз.");
@@ -75,6 +79,45 @@ public class Player {
             population = keyboard.nextInt();
 
         } while (!world.checkMovePopulationAvailability(prevX, prevY, x, y, id, population));
+        turnIsOver = true;
+    }
+
+    private void makeMoveResourcesTurn() {
+        int prevX, prevY, x, y, resources;
+        int actionNumber = 0;
+        String resourceName = null;
+
+        do {
+            System.out.println("Введите номер ресурса: ");
+            System.out.println("1. Древесина.");
+            System.out.println("2. Еда.");
+
+            actionNumber = keyboard.nextInt();
+            switch (actionNumber) {
+                case 1:
+                    resourceName = "Wood";
+                    break;
+                case 2:
+                    resourceName = "Food";
+                    break;
+                default:
+                    System.out.println("Введен несуществующий ресурс. Попробуйте еще раз.");
+                    break;
+            }
+        } while (!(actionNumber == 1 || actionNumber == 2));
+        do {
+            System.out.println("Введите x,y координаты клетки, ИЗ которой хотите переместить ресурсы.");
+            prevX = keyboard.nextInt() - 1;
+            prevY = keyboard.nextInt() - 1;
+
+            System.out.println("Введите x,y координаты клетки, В которую хотите переместить ресурсы.");
+            x = keyboard.nextInt() - 1;
+            y = keyboard.nextInt() - 1;
+
+            System.out.println("Введите количество ресурсов для перемещения.");
+            resources = keyboard.nextInt();
+
+        } while (!world.checkMoveResourcesAvailability(prevX, prevY, x, y, id, resourceName, resources));
         turnIsOver = true;
     }
 
