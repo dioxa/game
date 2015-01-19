@@ -22,7 +22,10 @@ public class World {
 
     }
 
-    //Update every MapCell and display
+    /**
+     * Вызвает MapCell.update() для каждой клетки, если у нее есть
+     * владелец, после вызывает display().
+     */
     public void update() {
         turnCounter++;
         for (int i = 0; i < MAP_SIZE; i++) {
@@ -35,7 +38,13 @@ public class World {
         display();
     }
 
-    //Set cell owner
+    /**
+     * Устанавливает владельца данной клетки. Используется
+     * для установки владельца без проверок.
+     * @param x Координата клетки.
+     * @param y Координата клетки.
+     * @param id ID игрока.
+     */
     public void setCellOwner(int x, int y, int id) {
 
         map[y][x].setOwner(id);
@@ -43,6 +52,16 @@ public class World {
 
     }
 
+
+    /**
+     * Вызывает checkTurnAvailability(). Если проверка проходит,
+     * пытается установить владельца клетки. Если выбрасывается
+     * ArrayIndexOutOfBoundsException возвращает false.
+     * @param x Координата клетки
+     * @param y Координата клетки
+     * @param id ID игрока, совершающего ход
+     * @return true, если ход выполнен, false, если нет
+     */
     public boolean setCellOwnerByTurn(int x, int y, int id) {
 
         if (!checkTurnAvailability(x, y, id)) {
@@ -60,7 +79,9 @@ public class World {
 
     }
 
-    //Display map to screen
+    /**
+     * Выводит карту и счетчик ходов на экран.
+     */
     private void display() {
 
         clearConsole();
@@ -74,35 +95,83 @@ public class World {
 
     }
 
+
+    /**
+     * Без проверок вычитает популяцию из одной клетки, и присваивает такое же значение
+     * в новую клетку.
+     * @param prevX x Координаты из которой происходит перемещение.
+     * @param prevY y Координаты из которой происходит перемещение.
+     * @param x x Координаты в которую происходит перемещение.
+     * @param y y Координаты в которую происходит перемещение.
+     * @param population Количество человек.
+     */
     public void movePopulation(int prevX, int prevY, int x, int y, int population){
             map[y][x].setPopulation(map[y][x].getPopulation() + population);
             map[prevY][prevX].setPopulation(map[prevY][prevX].getPopulation() - population);
     }
 
+
+    /**
+     * Проверяет возможно ли перемещение населения из одной клетки в другую на:
+     * Принадлежность обеих клеток одному игроку, ход в рамках карты,
+     * остаток человек на первой клетке больше или равно 1;
+     * @param prevX x Координаты из которой происходит перемещение.
+     * @param prevY y Координаты из которой происходит перемещение.
+     * @param x x Координаты в которую происходит перемещение.
+     * @param y y Координаты в которую происходит перемещение.
+     * @param playerId ID игрока.
+     * @param population Количесвто человек.
+     * @return true, если перемещение совершено, false, если нет.
+     */
     public boolean checkMovePopulationAvailability(int prevX, int prevY, int x, int y, int playerId, int population) {
-                try {
-                    if (map[prevY][prevX].getOwner() == playerId && map[y][x].getOwner() == playerId) {
-                        if (map[prevY][prevX].getPopulation() > population) {
-                            movePopulation(prevX, prevY, x, y, population);
-                            return true;
-                        } else {
-                            System.out.println("На клетке не может остаться меньше одного человека.");
-                        }
-                    } else {
-                        System.out.println("Обе клетки должны принадлежать вам.");
-                    }
-                } catch (ArrayIndexOutOfBoundsException error) {
-                    System.out.println("Ход за границы карты.");
+        try {
+            if (map[prevY][prevX].getOwner() == playerId && map[y][x].getOwner() == playerId) {
+                if (map[prevY][prevX].getPopulation() > population) {
+                    movePopulation(prevX, prevY, x, y, population);
+                    return true;
+                } else {
+                    System.out.println("На клетке не может остаться меньше одного человека.");
                 }
+            } else {
+                System.out.println("Обе клетки должны принадлежать вам.");
+            }
+        } catch (ArrayIndexOutOfBoundsException error) {
+            System.out.println("Ход за границы карты.");
+        }
         return false;
 
     }
 
+    /**
+     * Без проверок вычитает ресурсы из одной клетки, и присваивает такое же значение
+     * в новую клетку.
+     * @param prevX x Координаты из которой происходит перемещение.
+     * @param prevY y Координаты из которой происходит перемещение.
+     * @param x x Координаты в которую происходит перемещение.
+     * @param y y Координаты в которую происходит перемещение.
+     * @param resourceName Название ресурса, как ключ в HashMap, используемый для хранения
+     *                     ресурсов в клетке.
+     * @param resources Количество ресурсов для перемещения.
+     */
     public void moveResources(int prevX, int prevY, int x, int y, String resourceName, int resources){
         map[y][x].setCityResources(resourceName, map[y][x].getCityResources(resourceName) + resources);
         map[prevY][prevX].setCityResources(resourceName, map[prevY][prevX].getCityResources(resourceName) - resources);
     }
 
+    /**
+     * Проверяет возможно ли перемещение ресурсов из одной клетки в другую на:
+     * Принадлежность обеих клеток одному игроку, ход в рамках карты,
+     * остаток ресурсов на первой клетке больше или равно 1;
+     * @param prevX x Координаты из которой происходит перемещение.
+     * @param prevY y Координаты из которой происходит перемещение.
+     * @param x x Координаты в которую происходит перемещение.
+     * @param y y Координаты в которую происходит перемещение.
+     * @param playerId ID игрока.
+     * @param resourceName Название ресурса, как ключ в HashMap, используемый для хранения
+     *                     ресурсов в клетке.
+     * @param resources Количество ресурсов для перемещения.
+     * @return true, если перемещение совершено, false, если нет.
+     */
     public boolean checkMoveResourcesAvailability(int prevX, int prevY, int x, int y, int playerId, String resourceName, int resources) {
         try {
             if (map[prevY][prevX].getOwner() == playerId && map[y][x].getOwner() == playerId) {
@@ -122,6 +191,15 @@ public class World {
 
     }
 
+
+    /**
+     * Проверяет клетку на которую совершается ход на:
+     * наличие соведней клетки принадлежащей игроку, совершающему ход.
+     * @param x Координата клетки
+     * @param y Координата клетки
+     * @param id ID игрока, совершающего ход
+     * @return true, если ход возможен, false, если нет
+     */
     public boolean checkTurnAvailability(int x, int y, int id) {
         for (int row = y-1; row <= y+1; row++) {
             for (int col = x-1; col <= x+1; col++) {
@@ -135,6 +213,10 @@ public class World {
         return false;
     }
 
+
+    /**
+     * Выодит пустые строки для искусственной очистки экрана.
+     */
     private void clearConsole() {
         for (int i = 0; i < 9; i++){
             System.out.println(' ');

@@ -18,6 +18,10 @@ public class Game {
         world.setCellOwner(0, 0, player.getId());
     }
 
+
+    /**
+     * Запуск цикла игры.
+     */
     public void start(){
         Scanner sc = new Scanner(System.in);
         do {
@@ -31,6 +35,10 @@ public class Game {
         } while (!gameOver);
     }
 
+    /**
+     * Вызывает задержку в секундах.
+     * @param seconds Количество секунд ожидания.
+     */
     public void waitSeconds(int seconds) {
         try {
             Thread.sleep(seconds * 1000);

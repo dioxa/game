@@ -15,6 +15,10 @@ public class Player {
 
     private boolean turnIsOver;
 
+    /**
+     * Устанавливает игроку уникальный id и присваевает ему сссылку на мир.
+     * @param world Мир игры.
+     */
     public Player(World world) {
 
         id = nextId;
@@ -23,6 +27,9 @@ public class Player {
 
     }
 
+    /**
+     * Выбор действия при ходе и вызов соответствующей обработки.
+     */
     public void makeTurn() {
         turnIsOver = false;
         int actionNumber = 0;
@@ -52,6 +59,9 @@ public class Player {
 
     }
 
+    /**
+     * Обработка хода захвата клетки.
+     */
     private void makeCellTurn() {
         int x, y;
 
@@ -63,6 +73,9 @@ public class Player {
         turnIsOver = true;
     }
 
+    /**
+     * Обработка хода перемещения популяции.
+     */
     private void makeMovePopulationTurn() {
         int prevX, prevY, x, y, population;
 
@@ -82,6 +95,9 @@ public class Player {
         turnIsOver = true;
     }
 
+    /**
+     * Обарботка хода перемещения ресурсов.
+     */
     private void makeMoveResourcesTurn() {
         int prevX, prevY, x, y, resources;
         int actionNumber = 0;

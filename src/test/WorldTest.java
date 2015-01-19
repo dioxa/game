@@ -71,4 +71,22 @@ public class WorldTest {
 
     }
 
+    @Test
+    public void testCheckMoveResourcesAvailabilityGeneral() {
+        world.setCellOwner(0, 0, 1);
+        world.update();
+        for (int i = 0; i < 10; i++) {
+            world.update();
+        }
+        Assert.assertFalse(world.checkMoveResourcesAvailability(1, 1, 0, 0, 1, "Wood", 70));
+        Assert.assertTrue(world.checkMoveResourcesAvailability(1, 1, 0, 0, 1, "Food", 1));
+    }
+
+
+    @Test
+    public void testCheckMoveResourcesAvailabilityOtherPlayerCell() {
+        world.setCellOwner(0, 0, 2);
+        world.update();
+        Assert.assertFalse(world.checkMoveResourcesAvailability(0, 0, 1, 1, 2, "Wood", 1));
+    }
 }

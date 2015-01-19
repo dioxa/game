@@ -6,6 +6,10 @@ public abstract class Resource {
 
     protected String name;
 
+    /**
+     * Присваивает дочернему классу поле name, равное
+     * назвнию этого класса.
+     */
     Resource() {
         this.name = getClass().getSimpleName();
     }
@@ -14,8 +18,13 @@ public abstract class Resource {
         return amount;
     }
 
+    /**
+     * Устанавливает новое количество, и проверяет его
+     * на отрицательное значение.
+     * @param amount Новое количество.
+     */
     public void setAmount(double amount){
-        if (  amount < 0){
+        if (amount < 0){
             this.amount = 0;
         } else {
             this.amount = amount;
