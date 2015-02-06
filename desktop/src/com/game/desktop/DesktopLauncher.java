@@ -7,8 +7,8 @@ import com.game.Main;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 768;
-		config.height = 576;
+		config.width = 1024;
+		config.height = 768;
 		config.title = "game";
 		config.vSyncEnabled = true;
 		config.resizable = false;

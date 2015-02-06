@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
+import java.util.HashMap;
+
 
 public class World {
 
@@ -25,6 +27,8 @@ public class World {
 
     private Texture ownedCellTexture;
 
+    private final HashMap<String, Integer> worldDrawOffset = new HashMap<>();
+
 
     public World() {
         try {
@@ -35,6 +39,9 @@ public class World {
         } catch (GdxRuntimeException ignored) {
             Gdx.app.error("LOAD", "Texture load exception.");
         }
+        worldDrawOffset.put("x", 125);
+        worldDrawOffset.put("y", 150);
+
         worldBatch = new SpriteBatch();
         worldCamera = new OrthographicCamera();
         worldCamera.setToOrtho(true);
@@ -113,15 +120,18 @@ public class World {
      * Выводит карту и счетчик ходов на экран.
      */
     private void display() {
+
         worldCamera.update();
         worldBatch.setProjectionMatrix(worldCamera.combined);
         worldBatch.begin();
         for (int i = 0; i < WIDTH_MAP_SIZE; i++) {
             for (int j = 0; j < HEIGHT_MAP_SIZE; j++) {
                 if (map[i][j].getOwner() != 0) {
-                    worldBatch.draw(ownedCellTexture, i * CELL_SIZE, j * CELL_SIZE);
+                    worldBatch.draw(ownedCellTexture, i * CELL_SIZE + worldDrawOffset.get("x"),
+                            j * CELL_SIZE + worldDrawOffset.get("y"));
                 } else {
-                    worldBatch.draw(emptyCellTexture, i * CELL_SIZE, j * CELL_SIZE);
+                    worldBatch.draw(emptyCellTexture, i * CELL_SIZE + worldDrawOffset.get("x"),
+                            j * CELL_SIZE + worldDrawOffset.get("y"));
                 }
             }
         }
@@ -250,5 +260,7 @@ public class World {
         return map[x][y];
     }
 
-
+    public HashMap<String, Integer> getWorldDrawOffset() {
+        return worldDrawOffset;
+    }
 }

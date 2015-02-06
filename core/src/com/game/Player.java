@@ -39,7 +39,11 @@ public class Player {
             if (Gdx.input.justTouched()) {
                 if (GameInputProcessor.lastButton == Input.Buttons.LEFT && state != PlayerState.gettingInfo) {
                     state = PlayerState.owning;
-                    if (makeCellTurn(Gdx.input.getX() / world.CELL_SIZE, Gdx.input.getY() / world.CELL_SIZE)) {
+                    int turnX = (Gdx.input.getX() - world.getWorldDrawOffset().get("x")) / world.CELL_SIZE;
+                    int turnY = (Gdx.input.getY() - world.getWorldDrawOffset().get("y")) / world.CELL_SIZE;
+                    Gdx.app.log("КЛЕТКА", turnX + " " + turnY);
+                    if (makeCellTurn(turnX, turnY)) {
+
                         turnIsOver = true;
                     }
                 }
