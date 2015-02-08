@@ -25,6 +25,8 @@ public class World {
 
     private Texture emptyCellTexture;
 
+    private Texture availableCellTexture;
+
     private Texture ownedCellTexture;
 
     private final HashMap<String, Integer> worldDrawOffset = new HashMap<>();
@@ -36,6 +38,8 @@ public class World {
                     Gdx.files.internal("core/assets/images/map/emptyCell.png"));
             ownedCellTexture = new Texture(
                     Gdx.files.internal("core/assets/images/map/ownedCell.png"));
+            availableCellTexture = new Texture(
+                    Gdx.files.internal("core/assets/images/map/availableCell.png"));
         } catch (GdxRuntimeException ignored) {
             Gdx.app.error("LOAD", "Texture load exception.");
         }
@@ -133,11 +137,35 @@ public class World {
                     worldBatch.draw(emptyCellTexture, i * CELL_SIZE + worldDrawOffset.get("x"),
                             j * CELL_SIZE + worldDrawOffset.get("y"));
                 }
+                if (checkAvailableCells(i,j)){
+                    worldBatch.draw(availableCellTexture, i * CELL_SIZE + worldDrawOffset.get("x"),
+                            j * CELL_SIZE + worldDrawOffset.get("y"));
+                }
             }
         }
         worldBatch.end();
     }
 
+    /**
+     * Проверяет соседствует ли пустая клетка с населенной
+     * @param x
+     * @param y
+     * @return
+     */
+    private boolean checkAvailableCells(int x, int y) {
+        for (int row = x - 1; row <= x + 1; row++) {
+            for (int col = y - 1; col <= y + 1; col++) {
+                try {
+                    if (map[row][col].getOwner() != 0 && map[x][y].getOwner() == 0) {
+                        return true;
+                    }
+                }
+                catch(ArrayIndexOutOfBoundsException ignored){}
+            }
+
+        }
+        return false;
+    }
 
     /**
      * Без проверок вычитает популяцию из одной клетки, и присваивает такое же значение
