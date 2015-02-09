@@ -15,6 +15,8 @@ public class MapCell {
 
     private HashMap<String, Resource> cityResources;
 
+    private HashMap<String,String> resources;
+
     private int population;
 
     private final double foodRate = 0.02;
@@ -28,6 +30,7 @@ public class MapCell {
 
         cityResources = new HashMap<>();
         freeResources = new HashMap<>();
+        resources = new HashMap<>();
         freeResources.put("Wood", new Wood());
         freeResources.put("Food", new Food());
         cityResources.put("Wood", new Wood());
@@ -96,6 +99,15 @@ public class MapCell {
     public void setOwner(int id) {
         ownerID = id;
         population = 1;
+    }
+
+    public HashMap<String, String> getCellInfo(){
+        resources.put("Population", String.valueOf(getPopulation()));
+        for (String res: freeResources.keySet()){
+            resources.put("Free " + res, String.valueOf(freeResources.get(res).getAmount()));
+            resources.put("City" + res, String.valueOf(cityResources.get(res).getAmount()));
+        }
+        return resources;
     }
 
     public int getOwner(){
