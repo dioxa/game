@@ -5,37 +5,42 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.game.States.GameState;
 
+
 public class GameRenderer {
 
     private final Player player;
 
     private final World world;
 
-    private GameState state;
+    private GameState gameState;
 
     private int turnCounter = 0;
+
+    private MainScreenUI mainScreenUI;
 
     public GameRenderer(){
         world = new World();
         player = new Player(world);
         world.setCellOwner(0, 0, player.getId());
-        state = GameState.inProcess;
+        gameState = GameState.inProcess;
+        mainScreenUI = new MainScreenUI();
+
     }
 
     /**
      * Запуск цикла обработки игры.
      */
     public void update(){
-
         boolean updateCellsData = false;
-        if (state == GameState.inProcess) {
+        if (gameState == GameState.inProcess) {
             if (player.makeTurn()) {
                 turnCounter++;
                 updateCellsData = true;
-                Gdx.app.log("ХОД", "" + turnCounter);
             }
         }
         world.update(turnCounter, updateCellsData);
+        mainScreenUI.update(turnCounter);
+        Gdx.input.setInputProcessor(mainScreenUI.getStage());
         handle_input();
     }
 
@@ -44,16 +49,17 @@ public class GameRenderer {
      * @return boolean служит для выхода из обработки (временно)
      */
     private boolean handle_input() {
-        if (state == GameState.inProcess) {
+
+        if (gameState == GameState.inProcess) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-                state = GameState.paused;
+                gameState = GameState.paused;
                 Gdx.app.log("СОСТОЯНИЕ МИРА", "paused");
                 return true;
             }
         }
-        if (state == GameState.paused) {
+        if (gameState == GameState.paused) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.P)) {
-                state = GameState.inProcess;
+                gameState = GameState.inProcess;
                 Gdx.app.log("СОСТОЯНИЕ МИРА", "inProcess");
                 return false;
             }
