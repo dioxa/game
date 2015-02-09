@@ -36,28 +36,28 @@ public class Player {
      */
     public boolean makeTurn() {
         turnIsOver = false;
-            if (Gdx.input.justTouched()) {
-                if (GameInputProcessor.lastButton == Input.Buttons.LEFT && state != PlayerState.gettingInfo) {
-                    state = PlayerState.owning;
-                    int turnX = (Gdx.input.getX() - world.getWorldDrawOffset().get("x")) / world.CELL_SIZE;
-                    int turnY = (Gdx.input.getY() - world.getWorldDrawOffset().get("y")) / world.CELL_SIZE;
-                    Gdx.app.log("КЛЕТКА", turnX + " " + turnY);
-                    if (makeCellTurn(turnX, turnY)) {
+        if (Gdx.input.justTouched()) {
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && state != PlayerState.gettingInfo) {
+                state = PlayerState.owning;
+                int turnX = (Gdx.input.getX() - world.getWorldDrawOffset().get("x")) / world.CELL_SIZE;
+                int turnY = (Gdx.input.getY() - world.getWorldDrawOffset().get("y")) / world.CELL_SIZE;
+                Gdx.app.log("КЛЕТКА", turnX + " " + turnY);
+                if (makeCellTurn(turnX, turnY)) {
 
-                        turnIsOver = true;
-                    }
+                    turnIsOver = true;
                 }
-                if (GameInputProcessor.lastButton == Input.Buttons.RIGHT) {
-                    if (state ==PlayerState.gettingInfo) {
-                        state = PlayerState.owning;
-                        Gdx.app.log("INFO", "Выход из режима информации.");
-                    } else {
-                        state = PlayerState.gettingInfo;
-                        Gdx.app.log("INFO", "На экране информации. Правый клик, чтобы выйти.");
-                    }
-                }
-                Gdx.app.log("СОСТОЯНИЕ ИГРОКА", state.toString());
             }
+            if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+                if (state ==PlayerState.gettingInfo) {
+                    state = PlayerState.owning;
+                    Gdx.app.log("INFO", "Выход из режима информации.");
+                } else {
+                    state = PlayerState.gettingInfo;
+                    Gdx.app.log("INFO", "На экране информации. Правый клик, чтобы выйти.");
+                }
+            }
+            Gdx.app.log("СОСТОЯНИЕ ИГРОКА", state.toString());
+        }
 
         return turnIsOver;
 
@@ -75,7 +75,7 @@ public class Player {
      */
     private void makeMovePopulationTurn() {
         int prevX, prevY, x, y, population;
-       // world.checkMovePopulationAvailability(prevX, prevY, x, y, id, population);
+        // world.checkMovePopulationAvailability(prevX, prevY, x, y, id, population);
         turnIsOver = true;
     }
 
