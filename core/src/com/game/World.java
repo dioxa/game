@@ -177,8 +177,8 @@ public class World {
      * @param population Количество человек.
      */
     public void movePopulation(int prevX, int prevY, int x, int y, int population){
-            map[x][y].setPopulation(map[x][y].getPopulation() + population);
-            map[prevX][prevY].setPopulation(map[prevX][prevY].getPopulation() - population);
+        map[x][y].setPopulation(map[x][y].getPopulation() + population);
+        map[prevX][prevY].setPopulation(map[prevX][prevY].getPopulation() - population);
     }
 
 

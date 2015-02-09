@@ -16,6 +16,8 @@ public class Player {
 
     private PlayerState state;
 
+    private MapCell selectedCell;
+
     private boolean turnIsOver;
 
     /**
@@ -31,6 +33,7 @@ public class Player {
         turnIsOver = false;
     }
 
+
     /**
      * Выбор действия при ходе и вызов соответствующей обработки.
      */
@@ -43,7 +46,7 @@ public class Player {
                 int turnY = (Gdx.input.getY() - world.getWorldDrawOffset().get("y")) / world.CELL_SIZE;
                 Gdx.app.log("КЛЕТКА", turnX + " " + turnY);
                 if (makeCellTurn(turnX, turnY)) {
-
+                    selectedCell = world.getMapCell(turnX, turnY);
                     turnIsOver = true;
                 }
             }
@@ -52,8 +55,13 @@ public class Player {
                     state = PlayerState.owning;
                     Gdx.app.log("INFO", "Выход из режима информации.");
                 } else {
-                    state = PlayerState.gettingInfo;
-                    Gdx.app.log("INFO", "На экране информации. Правый клик, чтобы выйти.");
+                    int selectedX = (Gdx.input.getX() - world.getWorldDrawOffset().get("x")) / world.CELL_SIZE;
+                    int selectedY = (Gdx.input.getY() - world.getWorldDrawOffset().get("y")) / world.CELL_SIZE;
+                    if (selectedX >= 0 && selectedY >= 0) {
+                        selectedCell = world.getMapCell(selectedX, selectedY);
+                        state = PlayerState.gettingInfo;
+                        Gdx.app.log("INFO", "На экране информации. Правый клик, чтобы выйти.");
+                    }
                 }
             }
             Gdx.app.log("СОСТОЯНИЕ ИГРОКА", state.toString());
@@ -97,6 +105,18 @@ public class Player {
         }
         //world.checkMoveResourcesAvailability(prevX, prevY, x, y, id, resourceName, resources);
         turnIsOver = true;
+    }
+
+    public MapCell getSelectedCell() {
+        return selectedCell;
+    }
+
+    public void setPlayerStateToOwn() {
+        state = PlayerState.owning;
+    }
+
+    public void setPlayerStateToGettingInfo() {
+        state = PlayerState.gettingInfo;
     }
 
     public PlayerState getState() {

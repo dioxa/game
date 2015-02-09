@@ -4,6 +4,8 @@ package com.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.game.States.GameState;
+import com.game.States.PlayerState;
+import com.game.UI.MainScreenUI;
 
 
 public class GameRenderer {
@@ -18,30 +20,44 @@ public class GameRenderer {
 
     private MainScreenUI mainScreenUI;
 
+    private boolean updateCellsData;
+
+
     public GameRenderer(){
+        mainScreenUI = new MainScreenUI();
         world = new World();
         player = new Player(world);
         world.setCellOwner(0, 0, player.getId());
         gameState = GameState.inProcess;
-        mainScreenUI = new MainScreenUI();
-
     }
 
     /**
      * Запуск цикла обработки игры.
      */
     public void update(){
-        boolean updateCellsData = false;
+        update_player();
+        world.update(turnCounter, updateCellsData);
+        mainScreenUI.update(turnCounter);
+        Gdx.input.setInputProcessor(mainScreenUI.getStage());
+        handle_input();
+    }
+
+    /**
+     * Обработка действий игрока.
+     */
+    private void update_player() {
+        updateCellsData = false;
         if (gameState == GameState.inProcess) {
             if (player.makeTurn()) {
                 turnCounter++;
                 updateCellsData = true;
             }
         }
-        world.update(turnCounter, updateCellsData);
-        mainScreenUI.update(turnCounter);
-        Gdx.input.setInputProcessor(mainScreenUI.getStage());
-        handle_input();
+        if (player.getState() == PlayerState.gettingInfo) {
+            mainScreenUI.showCellInfo(player.getSelectedCell());
+        } else {
+            mainScreenUI.hideCellInfo();
+        }
     }
 
     /**
