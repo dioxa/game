@@ -57,7 +57,9 @@ public class Player {
                 } else {
                     int selectedX = (Gdx.input.getX() - world.getWorldDrawOffset().get("x")) / world.CELL_SIZE;
                     int selectedY = (Gdx.input.getY() - world.getWorldDrawOffset().get("y")) / world.CELL_SIZE;
-                    if (selectedX >= 0 && selectedY >= 0) {
+
+                    if ((selectedX >= 0 && selectedY >= 0) && (
+                            selectedX < world.getWorldWidth() && selectedY < world.getWorldHeight())) {
                         selectedCell = world.getMapCell(selectedX, selectedY);
                         state = PlayerState.gettingInfo;
                         Gdx.app.log("INFO", "На экране информации. Правый клик, чтобы выйти.");

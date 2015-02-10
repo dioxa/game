@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.game.MapCell;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public class MainScreenUI {
 
     private Label.LabelStyle labelInfoStyle;
 
-    private ArrayList<Label> info;
+    private ArrayList<Label> cellInfo;
 
     private Label turnLabel;
 
@@ -57,7 +56,6 @@ public class MainScreenUI {
         labelStyle = new Label.LabelStyle();
         labelStyle.font = gameFontUI;
         turnLabel = new Label("", labelStyle);
-        info = new ArrayList<>();
 
 
         tableUI = new Table();
@@ -80,32 +78,27 @@ public class MainScreenUI {
 
     /**
      * Показать информацию о клетке.
-     * @param cell Клетка для показа.
+     * @param rawCellInfo Информация для показа.
      */
-    public void showCellInfo(MapCell cell) {
-        HashMap<String, String> res;
-        float x, y;
-        if (cellInfoBackground == null) {
+    public void showCellInfo(HashMap<String, String> rawCellInfo) {
+        if (cellInfoBackground == null && cellInfo == null) {
             try {
                 cellInfoBackground = new Image(new Texture("core/assets/images/ui/infoBackground.png"));
                 cellInfoBackground.setX(Gdx.input.getX());
                 cellInfoBackground.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
-                res = cell.getCellInfo();
-                x = cellInfoBackground.getX() + 5;
-                y = cellInfoBackground.getY() + 17;
-                for (String name: res.keySet()){
-                    infoPopLabel = new Label("", labelInfoStyle);
-                    infoPopLabel.setText(name + ": " + res.get(name));
-                    infoPopLabel.setX(x);
-                    infoPopLabel.setY(y);
-                    y += 30;
-                    info.add(infoPopLabel);
+
+                cellInfo = new ArrayList<>();
+                float labelX = cellInfoBackground.getX() + 5;
+                float labelY = cellInfoBackground.getY() + 25;
+                for (String name: rawCellInfo.keySet()){
+                    infoPopLabel = new Label(name + ": " + rawCellInfo.get(name), labelInfoStyle);
+                    infoPopLabel.setPosition(labelX, labelY);
+                    labelY += 25;
+                    cellInfo.add(infoPopLabel);
                 }
                 stageUI.addActor(cellInfoBackground);
+                cellInfo.forEach(stageUI::addActor);
 
-                for(Label resources: info){
-                    stageUI.addActor(resources);
-                }
             } catch (GdxRuntimeException ignored) {
                 Gdx.app.log("ERROR", "Ошибка при загрузке infoBackground.png");
             }
@@ -116,11 +109,13 @@ public class MainScreenUI {
      * Скрыть информацию о клетке.
      */
     public void hideCellInfo() {
-        if (cellInfoBackground != null) {
-            for(Label el: info){
-                el.remove();
+        if (cellInfoBackground != null && cellInfo != null) {
+            for(Label element: cellInfo){
+                element.remove();
             }
-            info.clear();
+            cellInfo.clear();
+            cellInfo = null;
+
             cellInfoBackground.remove();
             cellInfoBackground = null;
 

@@ -15,8 +15,6 @@ public class MapCell {
 
     private HashMap<String, Resource> cityResources;
 
-    private HashMap<String,String> resources;
-
     private int population;
 
     private final double foodRate = 0.02;
@@ -30,7 +28,6 @@ public class MapCell {
 
         cityResources = new HashMap<>();
         freeResources = new HashMap<>();
-        resources = new HashMap<>();
         freeResources.put("Wood", new Wood());
         freeResources.put("Food", new Food());
         cityResources.put("Wood", new Wood());
@@ -101,13 +98,18 @@ public class MapCell {
         population = 1;
     }
 
+    /**
+     * Возвращает информацию о клетке. В виде HashMap <String, String>
+     * @return Информация о клетке.
+     */
     public HashMap<String, String> getCellInfo(){
-        resources.put("Population", String.valueOf(getPopulation()));
+        HashMap<String, String> cellInfo = new HashMap<>();
+        cellInfo.put("Population", String.valueOf(getPopulation()));
         for (String res: freeResources.keySet()){
-            resources.put("Free " + res, String.valueOf(freeResources.get(res).getAmount()));
-            resources.put("City" + res, String.valueOf(cityResources.get(res).getAmount()));
+            cellInfo.put("Free " + res, String.format("%.2f", freeResources.get(res).getAmount()));
+            cellInfo.put("City" + res, String.format("%.2f", cityResources.get(res).getAmount()));
         }
-        return resources;
+        return cellInfo;
     }
 
     public int getOwner(){

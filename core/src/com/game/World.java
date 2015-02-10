@@ -288,6 +288,28 @@ public class World {
         return map[x][y];
     }
 
+
+    /**
+     * Возвращает ширину мира в клетках.
+     * @return int ширина.
+     */
+    public int getWorldWidth() {
+        return WIDTH_MAP_SIZE;
+    }
+
+    /**
+     * Возвращает высоту мира в клетках.
+     * @return int высота.
+     */
+    public int getWorldHeight() {
+        return HEIGHT_MAP_SIZE;
+    }
+
+    /**
+     * Возвращает смещение отрисовки карты мира от границ окна в
+     * виде HashMap<String, Integer> с ключами x, y.
+     * @return Смещение мира.
+     */
     public HashMap<String, Integer> getWorldDrawOffset() {
         return worldDrawOffset;
     }
