@@ -54,7 +54,7 @@ public class GameRenderer {
             }
         }
         if (player.getState() == PlayerState.gettingInfo) {
-            mainScreenUI.showCellInfo(player.getSelectedCell());
+            mainScreenUI.showCellInfo(player.getSelectedCell().getCellInfo());
         } else {
             mainScreenUI.hideCellInfo();
         }
