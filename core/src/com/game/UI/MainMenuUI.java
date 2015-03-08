@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.game.Screens.MainScreen;
+import com.game.Screens.MenuOptionsScreen;
 
 
 /**
@@ -26,6 +27,13 @@ public class MainMenuUI{
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
             {
                 game.setScreen(new MainScreen(game));
+                return true;
+            }
+        });
+        optionsButton.addListener(new ClickListener() {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
+                game.setScreen(new MenuOptionsScreen(game));
                 return true;
             }
         });
