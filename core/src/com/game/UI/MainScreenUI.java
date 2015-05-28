@@ -3,10 +3,8 @@ package com.game.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -37,8 +35,6 @@ public class MainScreenUI {
     private Label infoPopLabel;
 
     private Table tableUI;
-
-    private Image cellInfoBackground;
 
     public MainScreenUI() {
         stageUI = new Stage();
@@ -81,22 +77,17 @@ public class MainScreenUI {
      * @param rawCellInfo Информация для показа.
      */
     public void showCellInfo(HashMap<String, String> rawCellInfo) {
-        if (cellInfoBackground == null && cellInfo == null) {
+        if (cellInfo == null) {
             try {
-                cellInfoBackground = new Image(new Texture("core/assets/images/ui/infoBackground.png"));
-                cellInfoBackground.setX(Gdx.input.getX());
-                cellInfoBackground.setY(Gdx.graphics.getHeight() - Gdx.input.getY());
-
                 cellInfo = new ArrayList<>();
-                float labelX = cellInfoBackground.getX() + 5;
-                float labelY = cellInfoBackground.getY() + 25;
-                for (String name: rawCellInfo.keySet()){
+                float labelX = turnLabel.getX() + 400;
+                float labelY = Gdx.graphics.getHeight()-25;
+                for (String name: rawCellInfo.keySet()) {
                     infoPopLabel = new Label(name + ": " + rawCellInfo.get(name), labelInfoStyle);
                     infoPopLabel.setPosition(labelX, labelY);
-                    labelY += 25;
+                    labelY -= 25;
                     cellInfo.add(infoPopLabel);
                 }
-                stageUI.addActor(cellInfoBackground);
                 cellInfo.forEach(stageUI::addActor);
 
             } catch (GdxRuntimeException ignored) {
@@ -109,16 +100,12 @@ public class MainScreenUI {
      * Скрыть информацию о клетке.
      */
     public void hideCellInfo() {
-        if (cellInfoBackground != null && cellInfo != null) {
+        if (cellInfo != null) {
             for(Label element: cellInfo){
                 element.remove();
             }
             cellInfo.clear();
             cellInfo = null;
-
-            cellInfoBackground.remove();
-            cellInfoBackground = null;
-
         }
     }
 
